@@ -3,7 +3,6 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import Earth from './three/Earth';
 import Particles from './three/Particles';
-import AttackLines from './three/AttackLines';
 import ErrorBoundary from './ErrorBoundary';
 
 const CyberScene: React.FC = () => {
@@ -11,8 +10,9 @@ const CyberScene: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = window.scrollY / totalHeight;
+      const scrollPosition = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollPosition / maxScroll;
       setScrollProgress(progress);
     };
 
@@ -22,21 +22,22 @@ const CyberScene: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
-        <OrbitControls 
-          enableZoom={false} 
-          enablePan={false}
-          maxPolarAngle={Math.PI * 0.6}
-          minPolarAngle={Math.PI * 0.4}
-        />
-        <ambientLight intensity={0.1} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
+      <Canvas camera={{ position: [0, 0, 2], fov: 75 }}>
+        <OrbitControls enableZoom={false} enablePan={false} />
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} />
         
         <Suspense fallback={null}>
-          <group position-y={scrollProgress * -2}>
-            <Earth radius={2} scrollProgress={scrollProgress} />
-            <Particles count={2000} radius={2 + scrollProgress * 4} scrollProgress={scrollProgress} />
-            <AttackLines radius={2} scrollProgress={scrollProgress} />
+          <group position-y={scrollProgress * -6}>
+            <Earth 
+              radius={0.25} 
+              scrollProgress={scrollProgress}
+            />
+            <Particles 
+              count={1000} 
+              radius={1} 
+              scrollProgress={scrollProgress} // Pass scrollProgress to Particles
+            />
           </group>
         </Suspense>
       </Canvas>

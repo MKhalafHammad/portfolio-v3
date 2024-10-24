@@ -28,7 +28,8 @@ const About: React.FC = () => {
             <Server className="w-12 h-12 mb-4 mx-auto text-cyan-500" />
             <h3 className="text-xl font-semibold mb-2 text-center">Expertise</h3>
             <ul className="list-disc list-inside">
-              <li>Cybersecurity</li>
+              <li>Penetration Testing</li>
+              <li>Digital Forensics</li>
               <li>Software Engineering</li>
               <li>Problem Solving</li>
               <li>Teamwork</li>
